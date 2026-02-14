@@ -1,0 +1,79 @@
+@startuml Modelo_Relacional_Biblioteca
+
+!define TABLE(name) entity name << (T,#FFAAAA) >>
+!define PK(x) <b><u>x</u></b>
+!define FK(x) <i>x</i>
+
+skinparam entity {
+    BackgroundColor White
+    BorderColor Black
+}
+
+TABLE(Author) {
+    PK(author_id) : String
+    --
+    name : String
+    nationality : String
+    birth_year : LocalDate
+    death_year : LocalDate
+}
+
+TABLE(Book) {
+    PK(book_id) : String
+    --
+    FK(author_id) : String
+    isbn : String
+    title : String
+    publication_year : Integer
+}
+
+TABLE(Genre) {
+    PK(genre_id) : String
+    --
+    name : String
+    description : String
+}
+
+TABLE(Book_Genre) {
+    PK(FK(book_id)) : String
+    PK(FK(genre_id)) : String
+}
+
+TABLE(Copy) {
+    PK(copy_id) : String
+    --
+    FK(book_id) : String
+}
+
+TABLE(Member) {
+    PK(member_id) : String
+    --
+    name : String
+    email : String
+    phone : String
+}
+
+TABLE(Loan) {
+    PK(loan_id) : String
+    --
+    FK(member_id) : String
+    loan_date : LocalDate
+    due_date : LocalDate
+    return_date : LocalDate
+}
+
+TABLE(Loan_Copy) {
+    PK(FK(loan_id)) : String
+    PK(FK(copy_id)) : String
+}
+
+' Relaciones
+Author ||--o{ Book : "1:N"
+Book ||--o{ Copy : "1:N"
+Book ||--|{ Book_Genre : "1:N"
+Genre ||--o{ Book_Genre : "1:N"
+Member ||--o{ Loan : "1:N"
+Loan ||--|{ Loan_Copy : "1:N"
+Copy ||--o{ Loan_Copy : "1:N"
+
+@enduml

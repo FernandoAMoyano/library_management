@@ -1,0 +1,124 @@
+@startuml Diagrama_Clases_Biblioteca
+
+skinparam class {
+    BackgroundColor White
+    BorderColor Black
+    ArrowColor Black
+}
+
+class Author {
+    - id : String
+    - name : String
+    - nationality : String
+    - birthYear : LocalDate
+    - deathYear : LocalDate
+    --
+    + Author(id, name, nationality, birthYear, deathYear)
+    + getId() : String
+    + setId(id : String) : void
+    + getName() : String
+    + setName(name : String) : void
+    + getNationality() : String
+    + setNationality(nationality : String) : void
+    + getBirthYear() : LocalDate
+    + setBirthYear(birthYear : LocalDate) : void
+    + getDeathYear() : LocalDate
+    + setDeathYear(deathYear : LocalDate) : void
+}
+
+class Genre {
+    - id : String
+    - name : String
+    - description : String
+    --
+    + Genre(id, name, description)
+    + getId() : String
+    + setId(id : String) : void
+    + getName() : String
+    + setName(name : String) : void
+    + getDescription() : String
+    + setDescription(description : String) : void
+}
+
+class Book {
+    - id : String
+    - isbn : String
+    - title : String
+    - publicationYear : Integer
+    - author : Author
+    - genreList : List<Genre>
+    --
+    + Book(id, isbn, title, publicationYear, author, genreList)
+    + getId() : String
+    + setId(id : String) : void
+    + getIsbn() : String
+    + setIsbn(isbn : String) : void
+    + getTitle() : String
+    + setTitle(title : String) : void
+    + getPublicationYear() : Integer
+    + setPublicationYear(publicationYear : Integer) : void
+    + getAuthor() : Author
+    + setAuthor(author : Author) : void
+    + getGenreList() : List<Genre>
+    + setGenreList(genreList : List<Genre>) : void
+}
+
+class Copy {
+    - id : String
+    - book : Book
+    --
+    + Copy(id, book)
+    + getId() : String
+    + setId(id : String) : void
+    + getBook() : Book
+    + setBook(book : Book) : void
+}
+
+class Member {
+    - id : String
+    - name : String
+    - email : String
+    - phone : String
+    --
+    + Member(id, name, email, phone)
+    + getId() : String
+    + setId(id : String) : void
+    + getName() : String
+    + setName(name : String) : void
+    + getEmail() : String
+    + setEmail(email : String) : void
+    + getPhone() : String
+    + setPhone(phone : String) : void
+}
+
+class Loan {
+    - id : String
+    - loanDate : LocalDate
+    - dueDate : LocalDate
+    - returnDate : LocalDate
+    - member : Member
+    - copyList : List<Copy>
+    --
+    + Loan(id, loanDate, dueDate, returnDate, member, copyList)
+    + getId() : String
+    + setId(id : String) : void
+    + getLoanDate() : LocalDate
+    + setLoanDate(loanDate : LocalDate) : void
+    + getDueDate() : LocalDate
+    + setDueDate(dueDate : LocalDate) : void
+    + getReturnDate() : LocalDate
+    + setReturnDate(returnDate : LocalDate) : void
+    + getMember() : Member
+    + setMember(member : Member) : void
+    + getCopyList() : List<Copy>
+    + setCopyList(copyList : List<Copy>) : void
+}
+
+' Relaciones
+Author "1" <-- "*" Book : tiene
+Genre "*" <--o "*" Book : pertenece
+Book "1" <-- "*" Copy : es copia de
+Member "1" <-- "*" Loan : realiza
+Copy "*" o--o "*" Loan : contiene
+
+@enduml
