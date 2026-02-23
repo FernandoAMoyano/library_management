@@ -12,7 +12,7 @@ Este documento resume las preguntas clave que guiaron el proceso de diseño, las
 
 | Pregunta | Respuesta | Problema que resuelve |
 |----------|-----------|----------------------|
-| Si mañana quisieras buscar "todos los libros de García Márquez", ¿cómo lo harías con tu modelo actual? | Necesito una entidad separada `Author` | Evitar redundancia e inconsistencias (ej: "Gabriel García Márquez" vs "G. García Márquez") |
+| Si mañana quisieras buscar "todos los libros de García Márquez", ¿cómo lo harías con tu modelo actual? | Necesito una entidad separada `models.Author` | Evitar redundancia e inconsistencias (ej: "Gabriel García Márquez" vs "G. García Márquez") |
 | ¿Te alcanza con solo el nombre del autor, o querrías guardar más datos (nacionalidad, año de nacimiento)? | Quiero guardar más datos | Justifica crear una entidad separada en lugar de un simple texto |
 
 ---
@@ -27,7 +27,7 @@ Este documento resume las preguntas clave que guiaron el proceso de diseño, las
 
 ---
 
-### 1.3 Separación de Libro y Ejemplar (Copy)
+### 1.3 Separación de Libro y Ejemplar (models.Copy)
 
 | Pregunta | Respuesta | Problema que resuelve |
 |----------|-----------|----------------------|
@@ -38,8 +38,8 @@ Este documento resume las preguntas clave que guiaron el proceso de diseño, las
 | ¿Cómo llamaría un bibliotecario a las copias físicas? | "Ejemplares" | Los nombres de entidades deben hablar el idioma del negocio |
 
 **Resultado:** Dos entidades separadas:
-- `Book` (la obra): isbn, titulo, año, autor
-- `Copy` (el ejemplar físico): id, referencia al libro
+- `models.Book` (la obra): isbn, titulo, año, autor
+- `models.Copy` (el ejemplar físico): id, referencia al libro
 
 ---
 
@@ -58,8 +58,8 @@ Este documento resume las preguntas clave que guiaron el proceso de diseño, las
 
 | Pregunta | Respuesta | Problema que resuelve |
 |----------|-----------|----------------------|
-| ¿Un libro puede tener varios géneros? ¿Un género puede tener varios libros? | Sí a ambas | Confirma relación N:M entre Book y Genre |
-| ¿Un ejemplar puede pertenecer a varios libros? | No, cada copia es de un solo libro | Confirma relación 1:N entre Book y Copy |
+| ¿Un libro puede tener varios géneros? ¿Un género puede tener varios libros? | Sí a ambas | Confirma relación N:M entre models.Book y models.Genre |
+| ¿Un ejemplar puede pertenecer a varios libros? | No, cada copia es de un solo libro | Confirma relación 1:N entre models.Book y models.Copy |
 | ¿La cardinalidad se expresa en ambos lados? | Sí, cada número se coloca cerca de la entidad a la que se refiere | Clarifica la notación correcta del diagrama ER |
 
 ---
@@ -79,7 +79,7 @@ Este documento resume las preguntas clave que guiaron el proceso de diseño, las
 
 | Pregunta | Respuesta | Problema que resuelve |
 |----------|-----------|----------------------|
-| ¿Cómo se representa `author_id` en la clase Book? | Como referencia al objeto `Author`, no como String | En POO trabajamos con objetos, no con IDs |
+| ¿Cómo se representa `author_id` en la clase models.Book? | Como referencia al objeto `models.Author`, no como String | En POO trabajamos con objetos, no con IDs |
 | Si tuvieras solo `author_id`, para obtener el nombre del autor tendrías que... | Buscar en una colección, obtener el objeto | Con el objeto completo: `book.getAuthor().getName()` es directo |
 
 ---
@@ -137,7 +137,7 @@ Este documento resume las preguntas clave que guiaron el proceso de diseño, las
 ### Principios descubiertos:
 
 1. **Los nombres deben hablar el idioma del negocio** - "Ejemplar" en vez de "detalle_libro"
-2. **Los atributos viven donde pertenecen naturalmente** - título en Book, no en la tabla intermedia
+2. **Los atributos viven donde pertenecen naturalmente** - título en models.Book, no en la tabla intermedia
 3. **No almacenar datos que se pueden calcular** - `cantidad` y `disponible` se derivan
 4. **En POO trabajamos con objetos, no con IDs** - referencias completas en lugar de FKs
 5. **Las tablas intermedias sin atributos propios se convierten en listas**

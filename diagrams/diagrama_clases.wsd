@@ -6,14 +6,14 @@ skinparam class {
     ArrowColor Black
 }
 
-class Author {
+class models.Author {
     - id : String
     - name : String
     - nationality : String
     - birthYear : LocalDate
     - deathYear : LocalDate
     --
-    + Author(id, name, nationality, birthYear, deathYear)
+    + models.Author(id, name, nationality, birthYear, deathYear)
     + getId() : String
     + setId(id : String) : void
     + getName() : String
@@ -26,12 +26,12 @@ class Author {
     + setDeathYear(deathYear : LocalDate) : void
 }
 
-class Genre {
+class models.Genre {
     - id : String
     - name : String
     - description : String
     --
-    + Genre(id, name, description)
+    + models.Genre(id, name, description)
     + getId() : String
     + setId(id : String) : void
     + getName() : String
@@ -40,15 +40,15 @@ class Genre {
     + setDescription(description : String) : void
 }
 
-class Book {
+class models.Book {
     - id : String
     - isbn : String
     - title : String
     - publicationYear : Integer
-    - author : Author
-    - genreList : List<Genre>
+    - author : models.Author
+    - genreList : List<models.Genre>
     --
-    + Book(id, isbn, title, publicationYear, author, genreList)
+    + models.Book(id, isbn, title, publicationYear, author, genreList)
     + getId() : String
     + setId(id : String) : void
     + getIsbn() : String
@@ -57,30 +57,30 @@ class Book {
     + setTitle(title : String) : void
     + getPublicationYear() : Integer
     + setPublicationYear(publicationYear : Integer) : void
-    + getAuthor() : Author
-    + setAuthor(author : Author) : void
-    + getGenreList() : List<Genre>
-    + setGenreList(genreList : List<Genre>) : void
+    + getAuthor() : models.Author
+    + setAuthor(author : models.Author) : void
+    + getGenreList() : List<models.Genre>
+    + setGenreList(genreList : List<models.Genre>) : void
 }
 
-class Copy {
+class models.Copy {
     - id : String
-    - book : Book
+    - book : models.Book
     --
-    + Copy(id, book)
+    + models.Copy(id, book)
     + getId() : String
     + setId(id : String) : void
-    + getBook() : Book
-    + setBook(book : Book) : void
+    + getBook() : models.Book
+    + setBook(book : models.Book) : void
 }
 
-class Member {
+class models.Member {
     - id : String
     - name : String
     - email : String
     - phone : String
     --
-    + Member(id, name, email, phone)
+    + models.Member(id, name, email, phone)
     + getId() : String
     + setId(id : String) : void
     + getName() : String
@@ -91,15 +91,15 @@ class Member {
     + setPhone(phone : String) : void
 }
 
-class Loan {
+class models.Loan {
     - id : String
     - loanDate : LocalDate
     - dueDate : LocalDate
     - returnDate : LocalDate
-    - member : Member
-    - copyList : List<Copy>
+    - member : models.Member
+    - copyList : List<models.Copy>
     --
-    + Loan(id, loanDate, dueDate, returnDate, member, copyList)
+    + models.Loan(id, loanDate, dueDate, returnDate, member, copyList)
     + getId() : String
     + setId(id : String) : void
     + getLoanDate() : LocalDate
@@ -108,17 +108,17 @@ class Loan {
     + setDueDate(dueDate : LocalDate) : void
     + getReturnDate() : LocalDate
     + setReturnDate(returnDate : LocalDate) : void
-    + getMember() : Member
-    + setMember(member : Member) : void
-    + getCopyList() : List<Copy>
-    + setCopyList(copyList : List<Copy>) : void
+    + getMember() : models.Member
+    + setMember(member : models.Member) : void
+    + getCopyList() : List<models.Copy>
+    + setCopyList(copyList : List<models.Copy>) : void
 }
 
 ' Relaciones
-Author "1" <-- "*" Book : tiene
-Genre "*" <--o "*" Book : pertenece
-Book "1" <-- "*" Copy : es copia de
-Member "1" <-- "*" Loan : realiza
-Copy "*" o--o "*" Loan : contiene
+models.Author "1" <-- "*" models.Book : tiene
+models.Genre "*" <--o "*" models.Book : pertenece
+models.Book "1" <-- "*" models.Copy : es copia de
+models.Member "1" <-- "*" models.Loan : realiza
+models.Copy "*" o--o "*" models.Loan : contiene
 
 @enduml

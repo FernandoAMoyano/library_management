@@ -1,3 +1,5 @@
+package models;
+
 import java.time.LocalDate;
 
 public class Author {
@@ -7,36 +9,36 @@ public class Author {
     private LocalDate birthYear;
     private LocalDate deathYear;
 
-    public Author(String id, String name, String nationality, LocalDate birthYear, LocalDate deathYear){
-        this.id=id;
-        this.name=name;
-        this.nationality=nationality;
-        this.birthYear=birthYear;
-        this.deathYear=deathYear;
+    public Author(String id, String name, String nationality, LocalDate birthYear, LocalDate deathYear) {
+        this.id = id;
+        this.name = name;
+        this.nationality = nationality;
+        this.birthYear = birthYear;
+        this.deathYear = deathYear;
     }
 
-    public String getId(){
+    public String getId() {
         return id;
     }
 
-    public void setId(String id){
-        this.id=id;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
-    public void setName(String name){
-        this.name=name;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getNationality(){
+    public String getNationality() {
         return nationality;
     }
 
-    public void setNationality(String nationality){
-        this.nationality=nationality;
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
     }
 
     public LocalDate getBirthYear() {

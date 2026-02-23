@@ -2,25 +2,25 @@
 
 ## Resumen de Relaciones del Modelo
 
-### Author ↔ Book
-- Un **Author** puede tener cero o muchos **Books** registrados
-- Todo **Book** debe tener exactamente un **Author**
+### models.Author ↔ models.Book
+- Un **models.Author** puede tener cero o muchos **Books** registrados
+- Todo **models.Book** debe tener exactamente un **models.Author**
 
-### Book ↔ Copy
-- Un **Book** puede tener cero o muchas **Copies** físicas
-- Toda **Copy** debe pertenecer a exactamente un **Book**
+### models.Book ↔ models.Copy
+- Un **models.Book** puede tener cero o muchas **Copies** físicas
+- Toda **models.Copy** debe pertenecer a exactamente un **models.Book**
 
-### Book ↔ Genre (a través de Book_Genre)
-- Un **Book** debe tener al menos un **Genre** asignado
-- Un **Genre** puede tener cero o muchos **Books** asociados
+### models.Book ↔ models.Genre (a través de Book_Genre)
+- Un **models.Book** debe tener al menos un **models.Genre** asignado
+- Un **models.Genre** puede tener cero o muchos **Books** asociados
 
-### Member ↔ Loan
-- Un **Member** puede tener cero o muchos **Loans**
-- Todo **Loan** debe pertenecer a exactamente un **Member**
+### models.Member ↔ models.Loan
+- Un **models.Member** puede tener cero o muchos **Loans**
+- Todo **models.Loan** debe pertenecer a exactamente un **models.Member**
 
-### Loan ↔ Copy (a través de Loan_Copy)
-- Todo **Loan** debe incluir al menos una **Copy** prestada
-- Una **Copy** puede tener cero o muchos **Loans** en su historial
+### models.Loan ↔ models.Copy (a través de Loan_Copy)
+- Todo **models.Loan** debe incluir al menos una **models.Copy** prestada
+- Una **models.Copy** puede tener cero o muchos **Loans** en su historial
 
 ---
 
@@ -40,10 +40,10 @@
 
 | Relación | Cardinalidad | Notación |
 |----------|--------------|----------|
-| Author → Book | 1 mandatory to many optional | `\|\|--o{` |
-| Book → Copy | 1 mandatory to many optional | `\|\|--o{` |
-| Book → Book_Genre | 1 mandatory to many mandatory | `\|\|--\|{` |
-| Genre → Book_Genre | 1 mandatory to many optional | `\|\|--o{` |
-| Member → Loan | 1 mandatory to many optional | `\|\|--o{` |
-| Loan → Loan_Copy | 1 mandatory to many mandatory | `\|\|--\|{` |
-| Copy → Loan_Copy | 1 mandatory to many optional | `\|\|--o{` |
+| models.Author → models.Book | 1 mandatory to many optional | `\|\|--o{` |
+| models.Book → models.Copy | 1 mandatory to many optional | `\|\|--o{` |
+| models.Book → Book_Genre | 1 mandatory to many mandatory | `\|\|--\|{` |
+| models.Genre → Book_Genre | 1 mandatory to many optional | `\|\|--o{` |
+| models.Member → models.Loan | 1 mandatory to many optional | `\|\|--o{` |
+| models.Loan → Loan_Copy | 1 mandatory to many mandatory | `\|\|--\|{` |
+| models.Copy → Loan_Copy | 1 mandatory to many optional | `\|\|--o{` |

@@ -1,9 +1,12 @@
-import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import models.*;
+import services.*;
+import ui.ConsoleMenu;
 
-public class Main{
+import java.time.LocalDate;
+import java.util.List;
+
+
+public class Main {
     public static void main(String args[]) {
 
         //MEMBERS
@@ -168,82 +171,88 @@ public class Main{
         );
 
         //COPYS
-        Copy copy1=new Copy("C1",book1);
-        Copy copy2=new Copy("C2",book2);
-        Copy copy3=new Copy("C3",book3);
-        Copy copy4=new Copy("C4",book4);
-        Copy copy5=new Copy("C5",book5);
+        Copy copy1 = new Copy("C1", book1);
+        Copy copy2 = new Copy("C2", book2);
+        Copy copy3 = new Copy("C3", book3);
+        Copy copy4 = new Copy("C4", book4);
+        Copy copy5 = new Copy("C5", book5);
 
         //ALMACENAMIENTOS
 
         //Almacenamiento de Miembros
-        Map<String, Member> members=new HashMap<>();
-        members.put(member1.getId(),member1);
-        members.put(member2.getId(),member2);
-        members.put(member3.getId(),member3);
-        members.put(member4.getId(),member4);
-        members.put(member5.getId(),member5);
+        MemberService memberService = new MemberService();
+        memberService.save(member1);
+        memberService.save(member2);
+        memberService.save(member3);
+        memberService.save(member4);
+        memberService.save(member5);
+
 
         //Almacenamiento de Autores
-        Map<String,Author> authors=new HashMap<>();
-        authors.put(author1.getId(),author1);
-        authors.put(author2.getId(),author2);
-        authors.put(author3.getId(),author3);
-        authors.put(author4.getId(),author4);
-        authors.put(author5.getId(),author5);
+        AuthorService authorService = new AuthorService();
+        authorService.save(author1);
+        authorService.save(author2);
+        authorService.save(author3);
+        authorService.save(author4);
+        authorService.save(author5);
+
 
         //Almacenamiento de Generos
-        Map<String,Genre> genres=new HashMap<>();
-        genres.put(genre1.getId(),genre1);
-        genres.put(genre2.getId(),genre2);
-        genres.put(genre3.getId(),genre3);
-        genres.put(genre4.getId(),genre4);
-        genres.put(genre5.getId(),genre5);
+        GenreService genreService = new GenreService();
+        genreService.save(genre1);
+        genreService.save(genre2);
+        genreService.save(genre3);
+        genreService.save(genre4);
+        genreService.save(genre5);
+
 
         //Almacenamiento de libros
-        Map<String, Book> books=new HashMap<>();
-        books.put(book1.getId(),book1);
-        books.put(book2.getId(),book2);
-        books.put(book3.getId(),book3);
-        books.put(book4.getId(),book4);
-        books.put(book5.getId(),book5);
+        BookService bookService = new BookService();
+        bookService.save(book1);
+        bookService.save(book2);
+        bookService.save(book3);
+        bookService.save(book4);
+        bookService.save(book5);
+
 
         //Almacenamiento de copias
-        Map<String, Copy> copies=new HashMap<>();
-        copies.put(copy1.getId(), copy1);
-        copies.put(copy2.getId(), copy2);
-        copies.put(copy3.getId(), copy3);
-        copies.put(copy4.getId(), copy4);
-        copies.put(copy5.getId(), copy5);
+        CopyService copyService = new CopyService();
+        copyService.save(copy1);
+        copyService.save(copy2);
+        copyService.save(copy3);
+        copyService.save(copy4);
+        copyService.save(copy5);
 
 
         //Creacion de Loans
-        Loan loan1=new Loan(
+        Loan loan1 = new Loan(
                 "L1",
-                LocalDate.of(2025,01,25),
-                LocalDate.of(2025,01,28),
-                LocalDate.of(2025,01,28),
-                members.get("M1"),
-                List.of(copy1,copy2)
+                LocalDate.of(2025, 01, 25),
+                LocalDate.of(2025, 01, 28),
+                LocalDate.of(2025, 01, 28),
+                memberService.findById("M1"),
+                List.of(copyService.findById("C1"), copyService.findById("C2"))
 
         );
         //Creacion de Loans
-        Loan loan2=new Loan(
+        Loan loan2 = new Loan(
                 "L2",
-                LocalDate.of(2025,01,23),
-                LocalDate.of(2025,01,25),
-                LocalDate.of(2025,01,26),
-                members.get("M3"),
-                List.of(copy4,copy5)
+                LocalDate.of(2025, 01, 23),
+                LocalDate.of(2025, 01, 25),
+                LocalDate.of(2025, 01, 26),
+                memberService.findById("M3"),
+                List.of(copyService.findById("C3"), copyService.findById("C4"))
 
         );
 
         //almacenamiento de Loans
-        Map<String,Loan> loans=new HashMap<>();
-        loans.put(loan1.getId(),loan1);
-        loans.put(loan2.getId(),loan2);
+        LoanService loanService = new LoanService();
+        loanService.save(loan1);
+        loanService.save(loan2);
 
-        System.out.println(loans);
+        //Inicio del programa
+        ConsoleMenu consoleMenu = new ConsoleMenu(memberService, bookService, authorService, genreService, copyService, loanService);
+        consoleMenu.iniciar();
     }
 }
 

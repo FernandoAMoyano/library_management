@@ -9,7 +9,7 @@ skinparam entity {
     BorderColor Black
 }
 
-TABLE(Author) {
+TABLE(models.Author) {
     PK(author_id) : String
     --
     name : String
@@ -18,7 +18,7 @@ TABLE(Author) {
     death_year : LocalDate
 }
 
-TABLE(Book) {
+TABLE(models.Book) {
     PK(book_id) : String
     --
     FK(author_id) : String
@@ -27,7 +27,7 @@ TABLE(Book) {
     publication_year : Integer
 }
 
-TABLE(Genre) {
+TABLE(models.Genre) {
     PK(genre_id) : String
     --
     name : String
@@ -39,13 +39,13 @@ TABLE(Book_Genre) {
     PK(FK(genre_id)) : String
 }
 
-TABLE(Copy) {
+TABLE(models.Copy) {
     PK(copy_id) : String
     --
     FK(book_id) : String
 }
 
-TABLE(Member) {
+TABLE(models.Member) {
     PK(member_id) : String
     --
     name : String
@@ -53,7 +53,7 @@ TABLE(Member) {
     phone : String
 }
 
-TABLE(Loan) {
+TABLE(models.Loan) {
     PK(loan_id) : String
     --
     FK(member_id) : String
@@ -68,12 +68,12 @@ TABLE(Loan_Copy) {
 }
 
 ' Relaciones
-Author ||--o{ Book : "1:N"
-Book ||--o{ Copy : "1:N"
-Book ||--|{ Book_Genre : "1:N"
-Genre ||--o{ Book_Genre : "1:N"
-Member ||--o{ Loan : "1:N"
-Loan ||--|{ Loan_Copy : "1:N"
-Copy ||--o{ Loan_Copy : "1:N"
+models.Author ||--o{ models.Book : "1:N"
+models.Book ||--o{ models.Copy : "1:N"
+models.Book ||--|{ Book_Genre : "1:N"
+models.Genre ||--o{ Book_Genre : "1:N"
+models.Member ||--o{ models.Loan : "1:N"
+models.Loan ||--|{ Loan_Copy : "1:N"
+models.Copy ||--o{ Loan_Copy : "1:N"
 
 @enduml

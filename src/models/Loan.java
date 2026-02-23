@@ -1,3 +1,5 @@
+package models;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -10,12 +12,12 @@ public class Loan {
     private List<Copy> copyList;
 
     public Loan(String id, LocalDate loanDate, LocalDate dueDate, LocalDate returnDate, Member member, List<Copy> copyList) {
-        this.id=id;
-        this.loanDate=loanDate;
-        this.dueDate=dueDate;
-        this.returnDate=returnDate;
-        this.member=member;
-        this.copyList=copyList;
+        this.id = id;
+        this.loanDate = loanDate;
+        this.dueDate = dueDate;
+        this.returnDate = returnDate;
+        this.member = member;
+        this.copyList = copyList;
     }
 
     public String getId() {

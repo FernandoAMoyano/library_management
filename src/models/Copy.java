@@ -1,10 +1,12 @@
+package models;
+
 public class Copy {
     private String id;
     private Book book;
 
     public Copy(String id, Book book) {
         this.id = id;
-        this.book=book;
+        this.book = book;
     }
 
     public String getId() {

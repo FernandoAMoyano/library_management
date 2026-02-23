@@ -87,7 +87,7 @@ Significa: puede haber ninguno o como máximo uno.
 - Lado izquierdo: exactamente uno, obligatorio
 - Lado derecho: cero o muchos
 
-**Ejemplo:** Author → Book (un autor puede tener 0 o muchos libros)
+**Ejemplo:** models.Author → models.Book (un autor puede tener 0 o muchos libros)
 
 ---
 
@@ -98,7 +98,7 @@ Significa: puede haber ninguno o como máximo uno.
 - Lado izquierdo: exactamente uno, obligatorio
 - Lado derecho: uno o muchos (al menos uno)
 
-**Ejemplo:** Book → Book_Genre (un libro debe tener al menos un género)
+**Ejemplo:** models.Book → Book_Genre (un libro debe tener al menos un género)
 
 ---
 
@@ -116,10 +116,10 @@ Significa: puede haber ninguno o como máximo uno.
 
 | Relación | Gráfico | Significado |
 |----------|:-------:|-------------|
-| Author → Book | `┼┼────o<` | Un autor puede tener 0 o muchos libros |
-| Book → Copy | `┼┼────o<` | Un libro puede tener 0 o muchas copias |
-| Book → Book_Genre | `┼┼────┼<` | Un libro debe tener al menos 1 género |
-| Genre → Book_Genre | `┼┼────o<` | Un género puede tener 0 o muchos libros |
-| Member → Loan | `┼┼────o<` | Un miembro puede tener 0 o muchos préstamos |
-| Loan → Loan_Copy | `┼┼────┼<` | Un préstamo debe tener al menos 1 copia |
-| Copy → Loan_Copy | `┼┼────o<` | Una copia puede tener 0 o muchos préstamos |
+| models.Author → models.Book | `┼┼────o<` | Un autor puede tener 0 o muchos libros |
+| models.Book → models.Copy | `┼┼────o<` | Un libro puede tener 0 o muchas copias |
+| models.Book → Book_Genre | `┼┼────┼<` | Un libro debe tener al menos 1 género |
+| models.Genre → Book_Genre | `┼┼────o<` | Un género puede tener 0 o muchos libros |
+| models.Member → models.Loan | `┼┼────o<` | Un miembro puede tener 0 o muchos préstamos |
+| models.Loan → Loan_Copy | `┼┼────┼<` | Un préstamo debe tener al menos 1 copia |
+| models.Copy → Loan_Copy | `┼┼────o<` | Una copia puede tener 0 o muchos préstamos |

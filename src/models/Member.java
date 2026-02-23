@@ -1,14 +1,16 @@
+package models;
+
 public class Member {
     private String id;
     private String name;
     private String email;
     private String phone;
 
-    public Member(String id, String name, String email, String phone){
-        this.id=id;
-        this.name=name;
-        this.email=email;
-        this.phone=phone;
+    public Member(String id, String name, String email, String phone) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
     }
 
     public String getId() {
@@ -19,12 +21,12 @@ public class Member {
         this.id = id;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
-    public void setName(String name){
-        this.name=name;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
