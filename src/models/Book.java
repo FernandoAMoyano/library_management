@@ -11,21 +11,22 @@ public class Book {
     private List<Genre> genreList;
 
     public Book(String id, String isbn, String title, Integer publicationYear, Author author, List<Genre> genreList) {
+        if (id == null || id.trim().isEmpty()) {
+            throw new IllegalArgumentException("El id debe ser un valor valido");
+        }
+        if (title == null || title.trim().isEmpty()) {
+            throw new IllegalArgumentException("El titulo debe ser un valor valido");
+        }
         this.id = id;
         this.isbn = isbn;
         this.title = title;
         this.publicationYear = publicationYear;
         this.author = author;
         this.genreList = genreList;
-
     }
 
     public String getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getIsbn() {
@@ -41,6 +42,9 @@ public class Book {
     }
 
     public void setTitle(String title) {
+        if (title == null || title.trim().isEmpty()) {
+            throw new IllegalArgumentException("El titulo debe ser un valor valido");
+        }
         this.title = title;
     }
 

@@ -1,37 +1,45 @@
 package services;
 
 import models.Member;
+import repository.MemberRepository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class MemberService {
-    private Map<String, Member> members = new HashMap<>();
+    private MemberRepository memberRepository;
+
+    public MemberService(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
+
+    public Member createMember(String name, String email, String phone) {
+        String id = memberRepository.generateId();
+        Member member = new Member(id, name, email, phone);
+        memberRepository.save(member);
+        return member;
+    }
 
     public void save(Member member) {
-        members.put(member.getId(), member);
+        memberRepository.save(member);
     }
 
     public Member findById(String id) {
-        return members.get(id);
+        return memberRepository.findById(id);
     }
 
     public Member findByName(String name) {
-        for (Member member : members.values()) {
-            if (member.getName().equals(name)) {
-                return member;
-            }
-        }
-        return null;
+        return memberRepository.findByName(name);
+    }
+
+    public Member findByEmail(String email) {
+        return memberRepository.findByEmail(email);
     }
 
     public List<Member> findAll() {
-        return new ArrayList<>(members.values());
+        return memberRepository.findAll();
     }
 
     public void delete(String id) {
-        members.remove(id);
+        memberRepository.delete(id);
     }
 }

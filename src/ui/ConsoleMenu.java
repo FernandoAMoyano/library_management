@@ -68,7 +68,7 @@ public class ConsoleMenu {
             System.out.println("Libro no encontrado");
         } else {
             int availableCount = 0;
-            List<Copy> copies = copyService.obtainCopies(book);
+            List<Copy> copies = copyService.findByBook(book);
             for (Copy c : copies) {
                 boolean isAvailable = loanService.isCopyAvailable(c);
                 if (isAvailable) availableCount++;
@@ -78,15 +78,15 @@ public class ConsoleMenu {
     }
 
     public void checkoutBook() {
-        //Buscando miembro por nombre
-        System.out.print("Coloque a continuacion el nombre con el que se registro como socio: ");
+        // Buscando miembro por nombre
+        System.out.print("Coloque a continuación el nombre con el que se registró como socio: ");
         String memberName = scanner.nextLine();
         Member member = memberService.findByName(memberName);
         if (member == null) {
             System.out.println("Aún no estás registrado como miembro");
             return;
         }
-        //Buscando libro por titulo
+        // Buscando libro por titulo
         System.out.print("Ingrese el título del libro: ");
         String bookTitle = scanner.nextLine();
         Book book = bookService.findByTitle(bookTitle);
@@ -94,24 +94,22 @@ public class ConsoleMenu {
             System.out.println("No tenemos disponible este libro");
             return;
         }
-        //Obteniendo copias del libro
-        List<Copy> bookCopies = copyService.obtainCopies(book);
-        //Obteniendo copia disponible
+        // Obteniendo copias del libro
+        List<Copy> bookCopies = copyService.findByBook(book);
+        // Obteniendo copia disponible
         Copy availableCopy = loanService.getFirstAvailableCopy(bookCopies);
         if (availableCopy == null) {
             System.out.println("No tenemos copias disponibles en este momento");
             return;
         }
         // Datos para el préstamo
-        String loanId = "L" + System.currentTimeMillis();
         LocalDate loanDate = LocalDate.now();
         LocalDate dueDate = LocalDate.now().plusDays(14);
-        LocalDate returnDate = null;
-        // Creación del préstamo
-        Loan loan = new Loan(loanId, loanDate, dueDate, returnDate, member, List.of(availableCopy));
-        loanService.save(loan);
+        
+        // Creación del préstamo usando el servicio
+        Loan loan = loanService.createLoan(loanDate, dueDate, member, List.of(availableCopy));
 
-        //Mensaje final
+        // Mensaje final
         System.out.println("\nPréstamo registrado exitosamente");
         System.out.println("Libro: " + book.getTitle());
         System.out.println("Copia: " + availableCopy.getId());
@@ -119,7 +117,7 @@ public class ConsoleMenu {
     }
 
     public void checkinBook() {
-        //Buscando miembro por nombre
+        // Buscando miembro por nombre
         System.out.print("Ingrese su nombre: ");
         String memberName = scanner.nextLine();
         Member member = memberService.findByName(memberName);
@@ -127,7 +125,7 @@ public class ConsoleMenu {
             System.out.println("Aún no estás registrado como miembro");
             return;
         }
-        //Buscando libro por titulo
+        // Buscando libro por titulo
         System.out.print("Ingrese el título del libro a devolver: ");
         String bookTitle = scanner.nextLine();
         Book book = bookService.findByTitle(bookTitle);
@@ -135,14 +133,14 @@ public class ConsoleMenu {
             System.out.println("No tenemos disponible este libro");
             return;
         }
-        //Buscando Prestamo activo del miembro y su libro
-        Loan loan = loanService.obtainActiveLoan(book, member);
+        // Buscando Prestamo activo del miembro y su libro
+        Loan loan = loanService.findActiveLoanByBookAndMember(book, member);
         if (loan == null) {
             System.out.println("No se encontró un préstamo activo de este libro para este miembro");
             return;
         }
-        //cambiamos el valor de fecha de devolucion a la fecha actual
-        loan.setReturnDate(LocalDate.now());
+        // Registrar devolución usando el servicio
+        loanService.returnLoan(loan.getId());
 
         System.out.println("\nDevolución registrada exitosamente");
         System.out.println("Libro: " + book.getTitle());

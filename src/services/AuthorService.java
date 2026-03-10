@@ -1,28 +1,42 @@
 package services;
 
 import models.Author;
+import repository.AuthorRepository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
 public class AuthorService {
-    private Map<String, Author> authors = new HashMap<>();
+    private AuthorRepository authorRepository;
+
+    public AuthorService(AuthorRepository authorRepository) {
+        this.authorRepository = authorRepository;
+    }
+
+    public Author createAuthor(String name, String nationality, LocalDate birthYear, LocalDate deathYear) {
+        String id = authorRepository.generateId();
+        Author author = new Author(id, name, nationality, birthYear, deathYear);
+        authorRepository.save(author);
+        return author;
+    }
 
     public void save(Author author) {
-        authors.put(author.getId(), author);
+        authorRepository.save(author);
     }
 
     public Author findById(String id) {
-        return authors.get(id);
+        return authorRepository.findById(id);
+    }
+
+    public Author findByName(String name) {
+        return authorRepository.findByName(name);
     }
 
     public List<Author> findAll() {
-        return new ArrayList<>(authors.values());
+        return authorRepository.findAll();
     }
 
     public void delete(String id) {
-        authors.remove(id);
+        authorRepository.delete(id);
     }
 }

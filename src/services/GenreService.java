@@ -1,28 +1,41 @@
 package services;
 
 import models.Genre;
+import repository.GenreRepository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class GenreService {
-    private Map<String, Genre> genres = new HashMap<>();
+    private GenreRepository genreRepository;
+
+    public GenreService(GenreRepository genreRepository) {
+        this.genreRepository = genreRepository;
+    }
+
+    public Genre createGenre(String name, String description) {
+        String id = genreRepository.generateId();
+        Genre genre = new Genre(id, name, description);
+        genreRepository.save(genre);
+        return genre;
+    }
 
     public void save(Genre genre) {
-        genres.put(genre.getId(), genre);
+        genreRepository.save(genre);
     }
 
     public Genre findById(String id) {
-        return genres.get(id);
+        return genreRepository.findById(id);
+    }
+
+    public Genre findByName(String name) {
+        return genreRepository.findByName(name);
     }
 
     public List<Genre> findAll() {
-        return new ArrayList<>(genres.values());
+        return genreRepository.findAll();
     }
 
     public void delete(String id) {
-        genres.remove(id);
+        genreRepository.delete(id);
     }
 }
