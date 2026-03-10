@@ -1,37 +1,44 @@
 package services;
 
+import models.Author;
 import models.Book;
+import models.Genre;
+import repository.BookRepository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class BookService {
-    private Map<String, Book> books = new HashMap<>();
+    private BookRepository bookRepository;
+
+    public BookService(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
+
+    public Book createBook(String isbn, String title, Integer publicationYear,
+                           Author author, List<Genre> genreList) {
+        String id = bookRepository.generateId();
+        Book book = new Book(id, isbn, title, publicationYear, author, genreList);
+        bookRepository.save(book);
+        return book;
+    }
 
     public void save(Book book) {
-        books.put(book.getId(), book);
+        bookRepository.save(book);
     }
 
     public Book findById(String id) {
-        return books.get(id);
+        return bookRepository.findById(id);
     }
 
     public Book findByTitle(String title) {
-        for (Book book : books.values()) {
-            if (book.getTitle().equals(title)) {
-                return book;
-            }
-        }
-        return null;
+        return bookRepository.findByTitle(title);
     }
 
     public List<Book> findAll() {
-        return new ArrayList<>(books.values());
+        return bookRepository.findAll();
     }
 
     public void delete(String id) {
-        books.remove(id);
+        bookRepository.delete(id);
     }
 }

@@ -10,6 +10,12 @@ public class Author {
     private LocalDate deathYear;
 
     public Author(String id, String name, String nationality, LocalDate birthYear, LocalDate deathYear) {
+        if (id == null || id.trim().isEmpty()) {
+            throw new IllegalArgumentException("El id debe ser un valor valido");
+        }
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("El nombre debe ser un valor valido");
+        }
         this.id = id;
         this.name = name;
         this.nationality = nationality;
@@ -21,15 +27,14 @@ public class Author {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("El nombre debe ser un valor valido");
+        }
         this.name = name;
     }
 

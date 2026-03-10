@@ -1,4 +1,16 @@
+import infrastructure.InMemoryAuthorRepository;
+import infrastructure.InMemoryBookRepository;
+import infrastructure.InMemoryCopyRepository;
+import infrastructure.InMemoryGenreRepository;
+import infrastructure.InMemoryLoanRepository;
+import infrastructure.InMemoryMemberRepository;
 import models.*;
+import repository.AuthorRepository;
+import repository.BookRepository;
+import repository.CopyRepository;
+import repository.GenreRepository;
+import repository.LoanRepository;
+import repository.MemberRepository;
 import services.*;
 import ui.ConsoleMenu;
 
@@ -9,251 +21,185 @@ import java.util.List;
 public class Main {
     public static void main(String args[]) {
 
-        //MEMBERS
-        Member member1 = new Member(
-                "M1",
+        // === REPOSITORIOS ===
+        AuthorRepository authorRepository = new InMemoryAuthorRepository();
+        GenreRepository genreRepository = new InMemoryGenreRepository();
+        BookRepository bookRepository = new InMemoryBookRepository();
+        MemberRepository memberRepository = new InMemoryMemberRepository();
+        CopyRepository copyRepository = new InMemoryCopyRepository();
+        LoanRepository loanRepository = new InMemoryLoanRepository();
+
+        // === SERVICIOS ===
+        AuthorService authorService = new AuthorService(authorRepository);
+        GenreService genreService = new GenreService(genreRepository);
+        BookService bookService = new BookService(bookRepository);
+        MemberService memberService = new MemberService(memberRepository);
+        CopyService copyService = new CopyService(copyRepository);
+        LoanService loanService = new LoanService(loanRepository);
+
+        // === DATOS DE PRUEBA ===
+
+        // MEMBERS
+        Member member1 = memberService.createMember(
                 "Juan Pérez",
                 "juan.perez@email.com",
                 "1123456789"
         );
 
-        Member member2 = new Member(
-                "M2",
+        Member member2 = memberService.createMember(
                 "María Gómez",
                 "maria.gomez@email.com",
                 "1134567890"
         );
 
-        Member member3 = new Member(
-                "M3",
+        Member member3 = memberService.createMember(
                 "Lucas Fernández",
                 "lucas.fernandez@email.com",
                 "1145678901"
         );
 
-        Member member4 = new Member(
-                "M4",
+        Member member4 = memberService.createMember(
                 "Ana Rodríguez",
                 "ana.rodriguez@email.com",
                 "1156789012"
         );
 
-        Member member5 = new Member(
-                "M5",
+        Member member5 = memberService.createMember(
                 "Sofía Martínez",
                 "sofia.martinez@email.com",
                 "1167890123"
         );
 
-
-        //AUTHORS
-        Author author1 = new Author(
-                "A1",
+        // AUTHORS
+        Author author1 = authorService.createAuthor(
                 "Gabriel García Márquez",
                 "Colombian",
                 LocalDate.of(1927, 3, 6),
                 LocalDate.of(2014, 4, 17)
         );
 
-        Author author2 = new Author(
-                "A2",
+        Author author2 = authorService.createAuthor(
                 "Jorge Luis Borges",
                 "Argentine",
                 LocalDate.of(1899, 8, 24),
                 LocalDate.of(1986, 6, 14)
         );
 
-        Author author3 = new Author(
-                "A3",
+        Author author3 = authorService.createAuthor(
                 "Jane Austen",
                 "British",
                 LocalDate.of(1775, 12, 16),
                 LocalDate.of(1817, 7, 18)
         );
 
-        Author author4 = new Author(
-                "A4",
+        Author author4 = authorService.createAuthor(
                 "George Orwell",
                 "British",
                 LocalDate.of(1903, 6, 25),
                 LocalDate.of(1950, 1, 21)
         );
 
-        Author author5 = new Author(
-                "A5",
+        Author author5 = authorService.createAuthor(
                 "Haruki Murakami",
                 "Japanese",
                 LocalDate.of(1949, 1, 12),
-                null // sigue vivo
+                null
         );
 
-
-        //GENRES
-        Genre genre1 = new Genre(
-                "G1",
+        // GENRES
+        Genre genre1 = genreService.createGenre(
                 "Ficción",
                 "Relatos imaginarios que pueden incluir elementos irreales o fantásticos."
         );
 
-        Genre genre2 = new Genre(
-                "G2",
+        Genre genre2 = genreService.createGenre(
                 "Ciencia Ficción",
                 "Historias basadas en avances científicos, tecnología y futuros posibles."
         );
 
-        Genre genre3 = new Genre(
-                "G3",
+        Genre genre3 = genreService.createGenre(
                 "Fantasía",
                 "Narraciones ambientadas en mundos imaginarios con magia y seres sobrenaturales."
         );
 
-        Genre genre4 = new Genre(
-                "G4",
+        Genre genre4 = genreService.createGenre(
                 "Novela Histórica",
                 "Relatos de ficción situados en contextos históricos reales."
         );
 
-        Genre genre5 = new Genre(
-                "G5",
+        Genre genre5 = genreService.createGenre(
                 "Misterio",
                 "Historias centradas en enigmas, crímenes o sucesos por resolver."
         );
 
-        //BOOKS
-        /* Ficción */
-        Book book1 = new Book(
-                "B1",
+        // BOOKS
+        Book book1 = bookService.createBook(
                 "978-0307474728",
                 "Cien años de soledad",
                 1967,
-                author1, // Gabriel García Márquez
+                author1,
                 List.of(genre1)
         );
 
-        /* Ficción + Misterio */
-        Book book2 = new Book(
-                "B2",
+        Book book2 = bookService.createBook(
                 "978-8439720984",
                 "El Aleph",
                 1949,
-                author2, // Jorge Luis Borges
+                author2,
                 List.of(genre1, genre5)
         );
 
-        /* Novela Histórica */
-        Book book3 = new Book(
-                "B3",
+        Book book3 = bookService.createBook(
                 "978-0141439518",
                 "Orgullo y prejuicio",
                 1813,
-                author3, // Jane Austen
+                author3,
                 List.of(genre4)
         );
 
-        /* Ciencia Ficción */
-        Book book4 = new Book(
-                "B4",
+        Book book4 = bookService.createBook(
                 "978-0451524935",
                 "1984",
                 1949,
-                author4, // George Orwell
+                author4,
                 List.of(genre2)
         );
 
-        /* Fantasía + Ficción */
-        Book book5 = new Book(
-                "B5",
+        Book book5 = bookService.createBook(
                 "978-0099448761",
                 "Kafka en la orilla",
                 2002,
-                author5, // Haruki Murakami
+                author5,
                 List.of(genre3, genre1)
         );
 
-        //COPYS
-        Copy copy1 = new Copy("C1", book1);
-        Copy copy2 = new Copy("C2", book2);
-        Copy copy3 = new Copy("C3", book3);
-        Copy copy4 = new Copy("C4", book4);
-        Copy copy5 = new Copy("C5", book5);
+        // COPIES
+        Copy copy1 = copyService.createCopy(book1);
+        Copy copy2 = copyService.createCopy(book2);
+        Copy copy3 = copyService.createCopy(book3);
+        Copy copy4 = copyService.createCopy(book4);
+        Copy copy5 = copyService.createCopy(book5);
 
-        //ALMACENAMIENTOS
-
-        //Almacenamiento de Miembros
-        MemberService memberService = new MemberService();
-        memberService.save(member1);
-        memberService.save(member2);
-        memberService.save(member3);
-        memberService.save(member4);
-        memberService.save(member5);
-
-
-        //Almacenamiento de Autores
-        AuthorService authorService = new AuthorService();
-        authorService.save(author1);
-        authorService.save(author2);
-        authorService.save(author3);
-        authorService.save(author4);
-        authorService.save(author5);
-
-
-        //Almacenamiento de Generos
-        GenreService genreService = new GenreService();
-        genreService.save(genre1);
-        genreService.save(genre2);
-        genreService.save(genre3);
-        genreService.save(genre4);
-        genreService.save(genre5);
-
-
-        //Almacenamiento de libros
-        BookService bookService = new BookService();
-        bookService.save(book1);
-        bookService.save(book2);
-        bookService.save(book3);
-        bookService.save(book4);
-        bookService.save(book5);
-
-
-        //Almacenamiento de copias
-        CopyService copyService = new CopyService();
-        copyService.save(copy1);
-        copyService.save(copy2);
-        copyService.save(copy3);
-        copyService.save(copy4);
-        copyService.save(copy5);
-
-
-        //Creacion de Loans
-        Loan loan1 = new Loan(
-                "L1",
-                LocalDate.of(2025, 01, 25),
-                LocalDate.of(2025, 01, 28),
-                LocalDate.of(2025, 01, 28),
-                memberService.findById("M1"),
-                List.of(copyService.findById("C1"), copyService.findById("C2"))
-
-        );
-        //Creacion de Loans
-        Loan loan2 = new Loan(
-                "L2",
-                LocalDate.of(2025, 01, 23),
-                LocalDate.of(2025, 01, 25),
-                LocalDate.of(2025, 01, 26),
-                memberService.findById("M3"),
-                List.of(copyService.findById("C3"), copyService.findById("C4"))
-
+        // LOANS (usando createLoan para demostrar el flujo completo)
+        Loan loan1 = loanService.createLoan(
+                LocalDate.of(2025, 1, 25),
+                LocalDate.of(2025, 1, 28),
+                member1,
+                List.of(copy1, copy2)
         );
 
-        //almacenamiento de Loans
-        LoanService loanService = new LoanService();
-        loanService.save(loan1);
-        loanService.save(loan2);
+        Loan loan2 = loanService.createLoan(
+                LocalDate.of(2025, 1, 23),
+                LocalDate.of(2025, 1, 25),
+                member3,
+                List.of(copy3, copy4)
+        );
 
-        //Inicio del programa
+        // Simular devolución del loan2
+        loanService.returnLoan(loan2.getId());
+
+        // === INICIO DEL PROGRAMA ===
         ConsoleMenu consoleMenu = new ConsoleMenu(memberService, bookService, authorService, genreService, copyService, loanService);
         consoleMenu.iniciar();
     }
 }
-
-

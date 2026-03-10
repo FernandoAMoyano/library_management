@@ -12,6 +12,21 @@ public class Loan {
     private List<Copy> copyList;
 
     public Loan(String id, LocalDate loanDate, LocalDate dueDate, LocalDate returnDate, Member member, List<Copy> copyList) {
+        if (id == null || id.trim().isEmpty()) {
+            throw new IllegalArgumentException("El id debe ser un valor valido");
+        }
+        if (loanDate == null) {
+            throw new IllegalArgumentException("La fecha de prestamo debe ser un valor valido");
+        }
+        if (dueDate == null) {
+            throw new IllegalArgumentException("La fecha de vencimiento debe ser un valor valido");
+        }
+        if (member == null) {
+            throw new IllegalArgumentException("El miembro debe ser un valor valido");
+        }
+        if (copyList == null || copyList.isEmpty()) {
+            throw new IllegalArgumentException("El prestamo debe incluir al menos una copia");
+        }
         this.id = id;
         this.loanDate = loanDate;
         this.dueDate = dueDate;
@@ -24,16 +39,8 @@ public class Loan {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public LocalDate getLoanDate() {
         return loanDate;
-    }
-
-    public void setLoanDate(LocalDate loanDate) {
-        this.loanDate = loanDate;
     }
 
     public LocalDate getDueDate() {
@@ -41,6 +48,9 @@ public class Loan {
     }
 
     public void setDueDate(LocalDate dueDate) {
+        if (dueDate == null) {
+            throw new IllegalArgumentException("La fecha de vencimiento debe ser un valor valido");
+        }
         this.dueDate = dueDate;
     }
 
@@ -56,15 +66,18 @@ public class Loan {
         return member;
     }
 
-    public void setMember(Member member) {
-        this.member = member;
-    }
-
     public List<Copy> getCopyList() {
         return copyList;
     }
 
-    public void setCopyList(List<Copy> copyList) {
-        this.copyList = copyList;
+    public boolean isActive() {
+        return returnDate == null;
+    }
+
+    public boolean isOverdue() {
+        if (!isActive()) {
+            return false;
+        }
+        return LocalDate.now().isAfter(dueDate);
     }
 }

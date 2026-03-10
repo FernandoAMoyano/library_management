@@ -7,6 +7,12 @@ public class Member {
     private String phone;
 
     public Member(String id, String name, String email, String phone) {
+        if (id == null || id.trim().isEmpty()) {
+            throw new IllegalArgumentException("El id debe ser un valor valido");
+        }
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("El nombre debe ser un valor valido");
+        }
         this.id = id;
         this.name = name;
         this.email = email;
@@ -17,15 +23,14 @@ public class Member {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("El nombre debe ser un valor valido");
+        }
         this.name = name;
     }
 
